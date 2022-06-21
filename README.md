@@ -1,4 +1,4 @@
-# vue_redo
+# vue-redo
 vue实现业务逻辑的回滚、重做功能
 
 1、vue实列
