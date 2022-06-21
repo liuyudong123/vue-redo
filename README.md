@@ -1,5 +1,5 @@
 # vue-redo
-vue实现业务逻辑的回滚、重做功能
+vue实现业务逻辑的回滚、重做功能，主要代码在index.html中
 
 1、vue实列
 建一个vue实列，然后在methods中加入两个关键方法，system_record_start，system_record_end；
