@@ -120,6 +120,7 @@
 			system_record_start(){
 				var _this=this;
 				_this.temp_data=copyJson(_this.$data);
+				delete _this.temp_data.temp_data;
 			},
 			// 结束记录
 			system_record_end(){
@@ -130,6 +131,7 @@
 				}
 				// 记录状态
 				var data=copyJson(_this.$data);
+				delete data.temp_data;
 				record.add({data:data});
 			},
 		}
