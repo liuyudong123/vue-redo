@@ -22,82 +22,14 @@
 	
 	<script src="js/vue.js"></script>
 	<script src="js/jquery-1.9.0.js"></script>
+	<script src="js/record.js"></script>
     <script type="text/javascript">
-		
-	// 拷贝json
-	function copyJson(obj) {
-		// return Object.assign({},obj);
-		return JSON.parse(JSON.stringify(obj));
-	}
-	
-	// 撤销栈
-	var record = {
-	    // 栈
-	    stack: [],
-	    // 可撤销步数
-	    stack_count: 20,
-	    // 当前步骤
-	    step: 0,
-	    // 返回栈的长度
-	    stackLeng() {
-	        var leng = this.stack.length;
-	        return leng ? leng - 1 : 0;
-	    },
-	    // 添加记录
-	    add(val) {
-	
-	        // 撤销途中增加，断尾
-	        if (this.step != this.stackLeng()) {
-	            console.log("断尾");
-	            //      ↓ x x x
-	            // [0,1,2,3,4,5]
-	            // splice(3,3)
-	            this.stack.splice(this.step + 1);
-	        }
-	
-	        // 20步删除首个
-	        if (this.step >= this.stack_count - 1) {
-	            console.log("移除首个");
-	            this.stack.shift();
-	        }
-	
-	        // 添加记录
-	        this.stack.push(val);
-	
-	        // 指针指向最新记录
-	        this.step = this.stackLeng();
-	
-	        // console.log(this.stack);
-	    },
-	    // 撤销 ctrl+z
-	    redo() {
-	        //      ↓
-	        // [0,1,2,3]
-	        if (this.step > 0) {
-	            this.step -= 1;
-	            var data = this.stack[this.step];
-	            return data;
-	        }
-	        return false;
-	    },
-	    // 恢复 ctrl+y 
-	    undo() {
-	        //        ↓
-	        // [0,1,2,3]
-	        if (this.step < this.stackLeng()) {
-	            this.step += 1;
-	            var data = this.stack[this.step];
-	            return data;
-	        }
-	        return false;
-	    }
-	};
 	
 	// vue实列
 	var app=new Vue({
 		el:"#app",
 		data:{
-			temp_data:null,
+			// 测试数据
 			list:[
 				{name:"张三",is_delete:0},
 				{name:"李四",is_delete:0},
@@ -105,35 +37,17 @@
 			]
 		},
 		methods:{
-			// 新增操作
+			// 新增
 			add(){},
-			// 删除操作
+			// 编辑
+			edit(){},
+			// 删除
 			del(item){
 				var _this=this;
-				_this.system_record_start();
+				record.start(_this);
 				item.is_delete=1;
-				_this.system_record_end();
-			},
-			// 编辑操作
-			edit(){},
-			// 开始记录
-			system_record_start(){
-				var _this=this;
-				_this.temp_data=copyJson(_this.$data);
-				delete _this.temp_data.temp_data;
-			},
-			// 结束记录
-			system_record_end(){
-				var _this=this;
-				// 初始值
-				if(!record.stack.length){
-					record.add({data:_this.temp_data});
-				}
-				// 记录状态
-				var data=copyJson(_this.$data);
-				delete data.temp_data;
-				record.add({data:data});
-			},
+				record.end(_this);
+			}
 		}
 	});
 	
@@ -146,14 +60,14 @@
         if(keyCode==89&&e.ctrlKey){
             var data=record.undo();
             if(data){
-                Object.assign(app.$data,copyJson(data.data));
+                Object.assign(app.$data,record.copyJson(data.data));
             }
         }
         // 90 z 后退
         if(keyCode==90&&e.ctrlKey){
             var data=record.redo();
             if(data){
-                Object.assign(app.$data,copyJson(data.data));
+                Object.assign(app.$data,record.copyJson(data.data));
             }
         }
     })
