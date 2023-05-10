@@ -9,7 +9,7 @@ vue实现业务逻辑的回滚、重做功能
 <script type="text/javascript" src="js/record.js"></script>
 ```
 
-2、修改属性值时记录
+2、修改属性时记录
 ```js
 methods:{
 	del(item){
