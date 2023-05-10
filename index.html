@@ -37,35 +37,31 @@
 			]
 		},
 		methods:{
-			// 新增
-			add(){},
-			// 编辑
-			edit(){},
 			// 删除
 			del(item){
 				var _this=this;
+				// 记录开始
 				record.start(_this);
 				item.is_delete=1;
+				// 记录结束
 				record.end(_this);
 			}
+		},
+		mounted(){
+			var _this=this;
+		    $(window).keydown(function(e){
+		        var keyCode=e.keyCode;
+		        // 89 y 前进
+		        if(keyCode==89&&e.ctrlKey){
+		            record.undo(_this);
+		        }
+		        // 90 z 后退
+		        if(keyCode==90&&e.ctrlKey){
+		            record.redo(_this);
+		        }
+		    })
 		}
 	});
-	
-	// 按键监控
-    $(window).keydown(function(e){
-		
-        var keyCode=e.keyCode;
-		
-        // 89 y 前进
-        if(keyCode==89&&e.ctrlKey){
-            var rst=record.undo(app);
-        }
-        // 90 z 后退
-        if(keyCode==90&&e.ctrlKey){
-            var rst=record.redo(app);
-        }
-    })
-    
 	</script>
 </body>
 

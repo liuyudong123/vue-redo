@@ -3,6 +3,7 @@
 vue实现业务逻辑的回滚、重做功能
 
 # 使用
+index.html中是一个案列
 ```html
 <script type="text/javascript" src="js/record.js"></script>
 ```
