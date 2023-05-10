@@ -58,17 +58,11 @@
 		
         // 89 y 前进
         if(keyCode==89&&e.ctrlKey){
-            var data=record.undo();
-            if(data){
-                Object.assign(app.$data,record.copyJson(data.data));
-            }
+            var rst=record.undo(app);
         }
         // 90 z 后退
         if(keyCode==90&&e.ctrlKey){
-            var data=record.redo();
-            if(data){
-                Object.assign(app.$data,record.copyJson(data.data));
-            }
+            var rst=record.redo(app);
         }
     })
     

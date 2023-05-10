@@ -10,10 +10,10 @@ vue实现业务逻辑的回滚、重做功能
 
 *history_count* 可撤销步数
 
-*start()* 开始记录
+*start(vue实列)* 开始记录，缓存变化前的数据
 
-*end()* 结束记录
+*end(vue实列)* 结束记录，保存变化前的数据后变化后的数据
 
-*redo()* 撤销 ctrl+z
+*redo(vue实列)* 撤销ctrl+z时使用，从记录中取出记录替换数据
 
-*undo()* 恢复 ctrl+y
+*undo(vue实列)* 恢复ctrl+y时使用，从记录中取出记录替换数据

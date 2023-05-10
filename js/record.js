@@ -40,23 +40,25 @@ var record = {
 		// console.log(this.history);
 	},
 	// 撤销 ctrl+z
-	redo() {
+	redo(vue) {
 		//      ↓
 		// [0,1,2,3]
 		if (this.step > 0) {
 			this.step -= 1;
 			var data = this.history[this.step];
+			Object.assign(vue.$data, this.copyJson(data.data));
 			return data;
 		}
 		return false;
 	},
 	// 恢复 ctrl+y 
-	undo() {
+	undo(vue) {
 		//        ↓
 		// [0,1,2,3]
 		if (this.step < this.historyLeng()) {
 			this.step += 1;
 			var data = this.history[this.step];
+			Object.assign(vue.$data, this.copyJson(data.data));
 			return data;
 		}
 		return false;
