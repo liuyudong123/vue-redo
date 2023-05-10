@@ -3,9 +3,38 @@
 vue实现业务逻辑的回滚、重做功能
 
 # 使用
-index.html中是一个案列
+
+1、引入文件
 ```html
 <script type="text/javascript" src="js/record.js"></script>
+```
+
+2、修改属性值时记录
+```js
+del(item){
+	var _this=this;
+	// 记录开始
+	record.start(_this);
+	// 修改了一个属性
+	item.is_delete=1;
+	// 记录结束
+	record.end(_this);
+}
+```
+
+3、监听按键
+```js
+$(window).keydown(function(e){
+    var keyCode=e.keyCode;
+    // 89 y 前进
+    if(keyCode==89&&e.ctrlKey){
+        record.undo(_this);
+    }
+    // 90 z 后退
+    if(keyCode==90&&e.ctrlKey){
+        record.redo(_this);
+    }
+})
 ```
 
 # API
